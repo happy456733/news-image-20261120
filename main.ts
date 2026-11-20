@@ -56,7 +56,7 @@ function encodePng(width: number, height: number, rgb: Uint8Array): Buffer {
   const raw = Buffer.alloc(height * (1 + width * 3));
   for (let y = 0; y < height; y++) {
     raw[y * (1 + width * 3)] = 0; // filter: none
-    rgb.copy(raw, y * (1 + width * 3) + 1, y * width * 3, (y + 1) * width * 3);
+    raw.set(rgb.subarray(y * width * 3, (y + 1) * width * 3), y * (1 + width * 3) + 1);
   }
   return Buffer.concat([
     Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
@@ -438,7 +438,7 @@ const STORIES: Story[] = [
     icon: iconScales,
     headline: 'WORLD COURT: MYANMAR COMMITTED GENOCIDE',
     summary:
-      "THE ICJ RULES MYANMAR'S FORCES COMMITTED GENOCIDE AGAINST THE ROHINGYA - A FIRST FOR THE COURT. 9-6 DECISION.",
+      'THE ICJ RULES MYANMAR COMMITTED GENOCIDE AGAINST THE ROHINGYA - A FIRST. 9-6.',
   },
   {
     tag: 'SUMMIT - SHENZHEN',
@@ -462,7 +462,7 @@ const STORIES: Story[] = [
     icon: iconTower,
     headline: 'HOUTHI MISSILES DAMAGE RIYADH TOWER',
     summary:
-      "MISSILES HIT RIYADH'S FINANCIAL DISTRICT, DAMAGING THE PUBLIC INVESTMENT FUND TOWER. SAUDI ARABIA INTERCEPTS MORE.",
+      "MISSILES HIT RIYADH'S FINANCIAL DISTRICT AND DAMAGE THE PUBLIC INVESTMENT FUND TOWER.",
   },
   {
     tag: 'MARKETS - NEW YORK',
@@ -470,7 +470,7 @@ const STORIES: Story[] = [
     icon: iconChart,
     headline: "ANTHROPIC'S RECORD IPO; STOCKS SLIDE",
     summary:
-      'SHARES CLOSE ABOUT 17% ABOVE THE $83 OFFER PRICE. THE S&P 500 FALLS FOR A FIFTH STRAIGHT DAY; NIKKEI DROPS 4.8%.',
+      'SHARES CLOSE 17% ABOVE THE $83 OFFER PRICE. S&P 500 FALLS A FIFTH DAY; NIKKEI DROPS 4.8%.',
   },
   {
     tag: 'EUROPE - BRUSSELS',
@@ -478,7 +478,7 @@ const STORIES: Story[] = [
     icon: iconStars,
     headline: 'EU AND UK AGREE NEW DEALS IN BRUSSELS',
     summary:
-      'LEADERS HOLD THEIR SECOND POST-BREXIT SUMMIT, AGREEING NEW DEALS ON FOOD TRADE, CARBON SCHEMES AND YOUTH MOBILITY.',
+      'LEADERS HOLD THEIR SECOND POST-BREXIT SUMMIT AND AGREE NEW DEALS ON TRADE, CARBON AND YOUTH MOBILITY.',
   },
 ];
 
